@@ -595,6 +595,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turret: {fileID: 7724365449682486550}
   rotationSpeed: 120
+  aimingRange: 10
+  fireRate: 1
+  shotPower: 10
+  firePoints:
+  - {fileID: 6247786016843898725}
+  bulletPrefab: {fileID: 3277436984828729423, guid: b3807109958deea49a5209983141dd5f, type: 3}
 --- !u!1 &7268113751114633288
 GameObject:
   m_ObjectHideFlags: 0

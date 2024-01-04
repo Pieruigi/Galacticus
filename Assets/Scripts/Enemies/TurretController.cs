@@ -15,9 +15,26 @@ namespace Galacticus
         [SerializeField]
         float aimingRange = 10;
 
+        [SerializeField]
+        float fireRate = 1f;
+
+        [SerializeField]
+        float firePower = 10f;
+
+        [SerializeField]
+        bool shootAllAtOnce = false;
+
+        [SerializeField]
+        List<Transform> firePoints;
+
+        [SerializeField]
+        GameObject bulletPrefab;
+
         Transform target;
         Collider targetCollider;
         bool disabled = false;
+        int lastBarrelIndex = 0;
+        System.DateTime lastShotTime;
 
         // Start is called before the first frame update
         void Start()
@@ -45,6 +62,11 @@ namespace Galacticus
                     if (hitInfo.collider.CompareTag(Tags.Player))
                     {
                         aim = false;
+                        if((System.DateTime.Now - lastShotTime).TotalSeconds > fireRate)
+                        {
+                            lastShotTime = System.DateTime.Now;
+                            Shoot();
+                        }
                         Debug.Log("TryShoot()");
                     }
                     
@@ -65,6 +87,30 @@ namespace Galacticus
 
         }
 
+        void Shoot()
+        {
+            if (shootAllAtOnce)
+            {
+                // Create a bullet for each barrel and shoot all
+                //for(int i=0; i<firePoints)
+            }
+            else
+            {
+                // Create bullet
+                GameObject bullet = Instantiate(bulletPrefab);
+
+                if (firePoints.Count == 1)
+                    lastBarrelIndex = 0;
+                else
+                    lastBarrelIndex = (lastBarrelIndex + 1) % firePoints.Count;
+
+                bullet.transform.position = firePoints[lastBarrelIndex].position;
+                bullet.GetComponent<Rigidbody>().AddForce(firePower * firePoints[lastBarrelIndex].forward, ForceMode.VelocityChange);
+            }
+            
+
+
+        }
      
     }
 

@@ -32,6 +32,8 @@ namespace Galacticus
         [SerializeField]
         float fireRate;
 
+        [SerializeField]
+        float firePower = 10;
 
         Rigidbody rb;
         Collider coll;
@@ -131,7 +133,7 @@ namespace Galacticus
                     // No collision with the shooter
                     Physics.IgnoreCollision(coll, bullet.GetComponent<Collider>(), true);
                     // Apply force
-                    brb.AddForce(transform.forward * 10, ForceMode.VelocityChange);
+                    brb.AddForce(transform.forward * firePower, ForceMode.VelocityChange);
                 }
             }
 
