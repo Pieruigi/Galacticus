@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Galacticus
@@ -25,12 +24,20 @@ namespace Galacticus
         {
             yield return new WaitForSeconds(lifeTime);
 
-            //Explode();
+            Explode();
+        }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            Explode(); 
+        }
+
+        void Explode()
+        {
+            GetComponentInChildren<MeshRenderer>().enabled = false;
             Destroy(gameObject, 1f);
         }
 
-        
     }
 
 }

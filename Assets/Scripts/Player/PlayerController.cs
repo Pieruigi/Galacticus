@@ -6,7 +6,7 @@ namespace Galacticus
 {
     public class PlayerController : MonoBehaviour
     {
-        [Header("Movement")]
+        [Header("Mover")]
         [SerializeField]
         float accelerationForce = 4;
 
@@ -22,7 +22,7 @@ namespace Galacticus
         [SerializeField]
         float rotationSpeed = 120f;
 
-        [Header("Fighting")]
+        [Header("Shooter")]
         [SerializeField]
         GameObject bulletPrefab;
 
@@ -42,7 +42,7 @@ namespace Galacticus
         bool aiming = false;
         bool moving = false;
         System.DateTime lastShotTime;
-
+        
 
         private void Awake()
         {
