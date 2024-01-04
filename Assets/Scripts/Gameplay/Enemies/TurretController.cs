@@ -10,37 +10,24 @@ namespace Galacticus
         Transform turret;
 
         [SerializeField]
+        List<Shooter> shooters;
+
+        [SerializeField]
         float rotationSpeed = 120f;
 
         [SerializeField]
         float aimingRange = 10;
-
-        [SerializeField]
-        float fireRate = 1f;
-
-        [SerializeField]
-        float firePower = 10f;
-
-        [SerializeField]
-        bool shootAllAtOnce = false;
-
-        [SerializeField]
-        List<Transform> firePoints;
-
-        [SerializeField]
-        GameObject bulletPrefab;
+                
 
         Transform target;
-        Collider targetCollider;
         bool disabled = false;
-        int lastBarrelIndex = 0;
-        System.DateTime lastShotTime;
-
+        
+       
         // Start is called before the first frame update
         void Start()
         {
             target = GameObject.FindGameObjectWithTag(Tags.Player).transform;
-            targetCollider = target.GetComponent<Collider>();
+          
         }
 
         // Update is called once per frame
@@ -62,12 +49,8 @@ namespace Galacticus
                     if (hitInfo.collider.CompareTag(Tags.Player))
                     {
                         aim = false;
-                        if((System.DateTime.Now - lastShotTime).TotalSeconds > fireRate)
-                        {
-                            lastShotTime = System.DateTime.Now;
-                            Shoot();
-                        }
-                        Debug.Log("TryShoot()");
+                        foreach (Shooter shooter in shooters)
+                            shooter.Shoot();
                     }
                     
                 }
@@ -78,7 +61,6 @@ namespace Galacticus
                     // Get the angle
                     float angle = Vector3.SignedAngle(turret.forward, Vector3.ProjectOnPlane(target.position - turret.position, Vector3.up), Vector3.up);
                     angle = Mathf.MoveTowardsAngle(0f, angle, rotationSpeed * Time.deltaTime);
-                    Debug.Log($"Angle:{angle}");
                     turret.forward = Quaternion.AngleAxis(angle, Vector3.up) * turret.forward;
                 }
             }
@@ -87,31 +69,7 @@ namespace Galacticus
 
         }
 
-        void Shoot()
-        {
-            if (shootAllAtOnce)
-            {
-                // Create a bullet for each barrel and shoot all
-                //for(int i=0; i<firePoints)
-            }
-            else
-            {
-                // Create bullet
-                GameObject bullet = Instantiate(bulletPrefab);
-
-                if (firePoints.Count == 1)
-                    lastBarrelIndex = 0;
-                else
-                    lastBarrelIndex = (lastBarrelIndex + 1) % firePoints.Count;
-
-                bullet.transform.position = firePoints[lastBarrelIndex].position;
-                bullet.GetComponent<Rigidbody>().AddForce(firePower * firePoints[lastBarrelIndex].forward, ForceMode.VelocityChange);
-            }
-            
-
-
-        }
-     
+    
     }
 
 }
