@@ -6,7 +6,7 @@ namespace Galacticus
 {
     public class PlayerController : MonoBehaviour
     {
-        
+        [Header("Movement")]
         [SerializeField]
         float accelerationForce = 4;
 
@@ -19,9 +19,19 @@ namespace Galacticus
         [SerializeField]
         float movingDrag = 2;
 
-
         [SerializeField]
         float rotationSpeed = 120f;
+
+        [Header("Fighting")]
+        [SerializeField]
+        GameObject bulletPrefab;
+
+        [SerializeField]
+        Transform firePoint;
+
+        [SerializeField]
+        float fireRate;
+
 
         Rigidbody rb;
         Collider coll;
@@ -31,7 +41,8 @@ namespace Galacticus
         
         bool aiming = false;
         bool moving = false;
-        
+        System.DateTime lastShotTime;
+
 
         private void Awake()
         {
@@ -94,7 +105,6 @@ namespace Galacticus
             }
             // Get the angle between the current aiming direction and the target one
             float angle = Vector3.SignedAngle(transform.forward, aimDirection.normalized, Vector3.up);
-            // Apply some interpolation 
             angle = Mathf.MoveTowardsAngle(0f, angle, rotationSpeed * Time.deltaTime);
             // Apply rotation
             transform.forward = Quaternion.AngleAxis(angle, Vector3.up) * transform.forward;
@@ -105,6 +115,25 @@ namespace Galacticus
                 rb.drag = movingDrag;
             else
                 rb.drag = notMovingDrag;
+
+            // Shoot
+            float angleTollerance = 3;
+            angle = Vector3.SignedAngle(transform.forward, aimDirection.normalized, Vector3.up); // Update the angle
+            if (aiming && Mathf.Abs(angle) < angleTollerance)
+            {
+                if((System.DateTime.Now - lastShotTime).TotalSeconds > fireRate)
+                {
+                    lastShotTime = System.DateTime.Now;
+                    // Create new bullet
+                    GameObject bullet = Instantiate(bulletPrefab);
+                    bullet.transform.position = firePoint.position;
+                    Rigidbody brb = bullet.GetComponent<Rigidbody>();
+                    // No collision with the shooter
+                    Physics.IgnoreCollision(coll, bullet.GetComponent<Collider>(), true);
+                    // Apply force
+                    brb.AddForce(transform.forward * 10, ForceMode.VelocityChange);
+                }
+            }
 
             
         }
@@ -120,14 +149,7 @@ namespace Galacticus
                 rb.AddForce(target * accelerationForce * (aiming ? accelerationForceAimingMul : 1f), ForceMode.Acceleration);
             }
 
-            //float mSpeed = maxSpeed;
-            //if (aiming)
-            //    mSpeed *= aimSpeedMul;
-
-            //if (rb.velocity.magnitude > mSpeed)
-            //    rb.velocity = rb.velocity.normalized * Mathf.MoveTowards(rb.velocity.magnitude, mSpeed, Time.fixedDeltaTime);
-            
-
+          
             
         }
     }
