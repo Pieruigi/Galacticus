@@ -651,6 +651,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7133461672584439237}
   - component: {fileID: 4444790357396303361}
+  - component: {fileID: 8088229391746495887}
+  - component: {fileID: 3311786032246412919}
   m_Layer: 0
   m_Name: ShooterL
   m_TagString: Untagged
@@ -690,8 +692,47 @@ MonoBehaviour:
   fireRate: 1
   firePower: 10
   fireDelay: 0
+  burstCount: 1
+  burstTime: 0
   firePoint: {fileID: 1092556283828010226}
   bulletPrefab: {fileID: 3277436984828729423, guid: b3807109958deea49a5209983141dd5f, type: 3}
+  avoiders:
+  - {fileID: 1388577083787892674}
+--- !u!114 &8088229391746495887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735597652245879720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6c147f8e6549d641980197e9e0e8af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds: []
+  particles: []
+--- !u!95 &3311786032246412919
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735597652245879720}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 69b43f1e819bb274a80fd07c3d0ef034, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6592657981524069567
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,6 +743,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2841157124336352295}
   - component: {fileID: 6353415438241241347}
+  - component: {fileID: 1388577083787892674}
+  - component: {fileID: 1498410032828142928}
   m_Layer: 0
   m_Name: Doublet
   m_TagString: Enemy
@@ -744,7 +787,41 @@ MonoBehaviour:
   - {fileID: 1702431243079228234}
   rotationSpeed: 120
   aimingRange: 10
-  alternateShooters: 1
+--- !u!135 &1388577083787892674
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6592657981524069567}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1498410032828142928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6592657981524069567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff513f221b31fc459fa3354b2602139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  currentHealth: 50
 --- !u!1 &7268113751114633288
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,6 +832,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6247786016843898725}
   - component: {fileID: 1702431243079228234}
+  - component: {fileID: 5492653302910137777}
+  - component: {fileID: 3787497171233669455}
   m_Layer: 0
   m_Name: ShooterR
   m_TagString: Untagged
@@ -794,8 +873,47 @@ MonoBehaviour:
   fireRate: 1
   firePower: 10
   fireDelay: 0.5
+  burstCount: 1
+  burstTime: 0
   firePoint: {fileID: 3115900044895943037}
   bulletPrefab: {fileID: 3277436984828729423, guid: b3807109958deea49a5209983141dd5f, type: 3}
+  avoiders:
+  - {fileID: 1388577083787892674}
+--- !u!114 &5492653302910137777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7268113751114633288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6c147f8e6549d641980197e9e0e8af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds: []
+  particles: []
+--- !u!95 &3787497171233669455
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7268113751114633288}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 69b43f1e819bb274a80fd07c3d0ef034, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7617127859179151012
 GameObject:
   m_ObjectHideFlags: 0

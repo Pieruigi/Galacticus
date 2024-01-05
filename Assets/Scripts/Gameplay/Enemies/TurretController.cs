@@ -1,3 +1,4 @@
+using Galacticus.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,8 +22,14 @@ namespace Galacticus
 
         Transform target;
         bool disabled = false;
-        
-       
+        IDamageable damageable;
+
+        private void Awake()
+        {
+            damageable = GetComponent<IDamageable>();
+            damageable.OnKill += HandleOnKill;
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -69,7 +76,15 @@ namespace Galacticus
 
         }
 
-    
+        public void HandleOnKill()
+        {
+            // Disable shooters
+            foreach (Shooter s in shooters)
+                s.Disabled = true;
+
+            // Play some animation
+            Destroy(gameObject, 1f);
+        }
     }
 
 }

@@ -587,6 +587,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2841157124336352295}
   - component: {fileID: 6353415438241241347}
+  - component: {fileID: 5081993842766658351}
+  - component: {fileID: 1924422112620665914}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Enemy
@@ -628,6 +630,41 @@ MonoBehaviour:
   - {fileID: 1702431243079228234}
   rotationSpeed: 120
   aimingRange: 10
+--- !u!114 &5081993842766658351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6592657981524069567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff513f221b31fc459fa3354b2602139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  currentHealth: 50
+--- !u!135 &1924422112620665914
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6592657981524069567}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7268113751114633288
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +675,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6247786016843898725}
   - component: {fileID: 1702431243079228234}
+  - component: {fileID: 4599486421716600426}
+  - component: {fileID: 7507713256400526687}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: Untagged
@@ -677,8 +716,47 @@ MonoBehaviour:
   fireRate: 1
   firePower: 10
   fireDelay: 0
+  burstCount: 3
+  burstTime: 0.6
   firePoint: {fileID: 3115900044895943037}
   bulletPrefab: {fileID: 3277436984828729423, guid: b3807109958deea49a5209983141dd5f, type: 3}
+  avoiders:
+  - {fileID: 1924422112620665914}
+--- !u!114 &4599486421716600426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7268113751114633288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6c147f8e6549d641980197e9e0e8af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds: []
+  particles: []
+--- !u!95 &7507713256400526687
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7268113751114633288}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 69b43f1e819bb274a80fd07c3d0ef034, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7617127859179151012
 GameObject:
   m_ObjectHideFlags: 0

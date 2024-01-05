@@ -1,3 +1,4 @@
+using Galacticus.Interfaces;
 using System.Collections;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ namespace Galacticus
     {
         [SerializeField]
         float lifeTime = 2f;
+
+        [SerializeField]
+        float damage = 10;
 
         // Start is called before the first frame update
         void Start()
@@ -24,19 +28,24 @@ namespace Galacticus
         {
             yield return new WaitForSeconds(lifeTime);
 
-            Explode();
+            GetComponentInChildren<MeshRenderer>().enabled = false;
+            GetComponent<Collider>().enabled = false;
+            Destroy(gameObject, 1f);
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            Explode(); 
+            GetComponentInChildren<MeshRenderer>().enabled = false;
+            GetComponent<Collider>().enabled = false;
+            Destroy(gameObject, 1f);
+            // Apply damage
+            collision.collider.GetComponent<IDamageable>()?.ApplyDamage(damage);
+            
+
+
         }
 
-        void Explode()
-        {
-            GetComponentInChildren<MeshRenderer>().enabled = false;
-            Destroy(gameObject, 1f);
-        }
+        
 
     }
 
