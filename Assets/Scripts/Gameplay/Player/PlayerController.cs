@@ -1,10 +1,11 @@
+using Galacticus.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Galacticus
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IStrafer
     {
         [Header("Mover")]
         [SerializeField]
@@ -106,8 +107,11 @@ namespace Galacticus
                 aimDirection = moveDirection;
             }
             // Get the angle between the current aiming direction and the target one
+            float mul = 1;
+            if (aiming)
+                mul = .5f;
             float angle = Vector3.SignedAngle(transform.forward, aimDirection.normalized, Vector3.up);
-            angle = Mathf.MoveTowardsAngle(0f, angle, rotationSpeed * Time.deltaTime);
+            angle = Mathf.MoveTowardsAngle(0f, angle, rotationSpeed * mul * Time.deltaTime);
             // Apply rotation
             transform.forward = Quaternion.AngleAxis(angle, Vector3.up) * transform.forward;
            
@@ -143,17 +147,38 @@ namespace Galacticus
         void Move()
         {
             Vector3 target = aiming ? moveDirection : transform.forward;
-            target = moveDirection;
+            //target = moveDirection;
+
+            float mul = 1f;
+            if (!aiming)
+            {
+                if (Vector3.Dot(moveDirection, Vector3.ProjectOnPlane(transform.forward, Vector3.up)) < 0f)
+                    mul = .5f;
+            }
 
             if(moving)
             {
                 // Apply force
-                rb.AddForce(target * accelerationForce * (aiming ? accelerationForceAimingMul : 1f), ForceMode.Acceleration);
+                rb.AddForce(target * accelerationForce * mul * (aiming ? accelerationForceAimingMul : 1f), ForceMode.Acceleration);
             }
 
           
             
         }
+
+        #region IRollable implementation
+        public bool IsStrafing()
+        {
+            return aiming && moving;
+        }
+
+        //public bool IsTurning()
+        //{
+        //    Debug.Log($"{Vector3.Distance(moveDirection.normalized, Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized)}");
+        //    //float angle = 
+        //    return !aiming && moveDirection != Vector3.zero && Vector3.Distance(moveDirection.normalized, Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized) > 0.01f;
+        //}
+        #endregion
     }
 
 }

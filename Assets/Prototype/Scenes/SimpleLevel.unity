@@ -6466,21 +6466,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2089443243611795553, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
+      propertyPath: rotationSpeed
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 2089443243611795553, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
+      propertyPath: accelerationForce
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 2963939022260250807, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2963939022260250807, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
+      propertyPath: rollSpeed
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963939022260250807, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
       propertyPath: maxYawSpeed
-      value: 40
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2963939022260250807, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
       propertyPath: minYawSpeed
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2963939022260250807, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
       propertyPath: maxRollAngle
-      value: 45
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963939022260250807, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
+      propertyPath: maxSideSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963939022260250807, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
+      propertyPath: minRollAngle
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963939022260250807, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
+      propertyPath: minSideSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963939022260250807, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
+      propertyPath: useRigidbody
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3227465434368151454, guid: 39a3d2369d49ec741b024d5c811b75ca, type: 3}
       propertyPath: m_Name
