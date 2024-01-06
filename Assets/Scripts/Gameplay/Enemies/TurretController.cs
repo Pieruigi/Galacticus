@@ -78,12 +78,13 @@ namespace Galacticus
 
         public void HandleOnKill()
         {
+            // Disable turret
+            disabled = true;
+
             // Disable shooters
             foreach (Shooter s in shooters)
                 s.Disabled = true;
-
-            // Play some animation
-            Destroy(gameObject, 1f);
+               
         }
     }
 

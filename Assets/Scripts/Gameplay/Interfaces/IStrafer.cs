@@ -8,8 +8,7 @@ namespace Galacticus.Interfaces
     {
         bool IsStrafing();
 
-        //bool IsTurning();
-       
+        
     }
 
 }

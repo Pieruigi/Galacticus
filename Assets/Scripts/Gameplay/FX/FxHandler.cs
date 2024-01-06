@@ -4,30 +4,27 @@ using UnityEngine;
 
 namespace Galacticus
 {
-    public class ShooterFx : MonoBehaviour
+    public abstract class FxHandler : MonoBehaviour
     {
         [SerializeField]
         List<AudioSource> sounds;
 
         [SerializeField]
         List<ParticleSystem> particles;
-        
+
         Animator animator;
-        Shooter shooter;
-
-        private void Awake()
+        protected Animator Animator
         {
-            shooter = GetComponent<Shooter>();
+            get { return animator; }
+        }
+
+
+        protected virtual void Awake()
+        {
             animator = GetComponent<Animator>();
-            shooter.OnShoot += HandleOnShoot;            
+
         }
 
-
-        void HandleOnShoot()
-        {
-            if(animator)
-                animator.SetTrigger("Shoot");
-        }
 
         public void PlaySound(int index)
         {
@@ -43,7 +40,7 @@ namespace Galacticus
 
         public void PlayParticle(int index)
         {
-            if (index < 0 || index >= sounds.Count)
+            if (index < 0 || index >= particles.Count)
             {
                 Debug.LogWarning($"{this.name} - No particle for index {index}");
                 return;
@@ -52,7 +49,5 @@ namespace Galacticus
             particles[index].Play();
         }
     }
-
-
 
 }

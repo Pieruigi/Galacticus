@@ -12,9 +12,23 @@ namespace Galacticus
         [SerializeField]
         float damage = 10;
 
+        [SerializeField]
+        float speed = 20;
+
+        [SerializeField]
+        ParticleSystem explosionParticle;
+
+        Rigidbody rb;
+
+        private void Awake()
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
+            rb.velocity = transform.forward * speed;
             StartCoroutine(Expire());
         }
 
@@ -27,7 +41,7 @@ namespace Galacticus
         IEnumerator Expire()
         {
             yield return new WaitForSeconds(lifeTime);
-
+            rb.velocity = Vector3.zero;
             GetComponentInChildren<MeshRenderer>().enabled = false;
             GetComponent<Collider>().enabled = false;
             Destroy(gameObject, 1f);
@@ -35,9 +49,11 @@ namespace Galacticus
 
         private void OnCollisionEnter(Collision collision)
         {
+            rb.velocity = Vector3.zero;
             GetComponentInChildren<MeshRenderer>().enabled = false;
             GetComponent<Collider>().enabled = false;
-            Destroy(gameObject, 1f);
+            explosionParticle.Play();
+            Destroy(gameObject, 2f);
             // Apply damage
             collision.collider.GetComponent<IDamageable>()?.ApplyDamage(damage);
             

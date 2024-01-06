@@ -41,11 +41,13 @@ namespace Galacticus
 
        
         Vector3 moveDirection;
-        
+        Vector3 aimDirection;
+
         bool aiming = false;
         bool moving = false;
         System.DateTime lastShotTime;
-        
+
+        //Vector3 moveInput, aimInput;
 
         private void Awake()
         {
@@ -74,8 +76,8 @@ namespace Galacticus
         void CheckInput()
         {
             // Get input
-            Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            Vector2 aimInput = new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical"));
+            Vector3 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            Vector3 aimInput = new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical"));
 
             // Moving
             if (moveInput.magnitude > 0)
@@ -95,7 +97,7 @@ namespace Galacticus
 
 
             // Aiming
-            Vector3 aimDirection;
+            
             if (aimInput.magnitude > 0)
             {
                 aiming = true;
@@ -133,11 +135,12 @@ namespace Galacticus
                     // Create new bullet
                     GameObject bullet = Instantiate(bulletPrefab);
                     bullet.transform.position = firePoint.position;
+                    bullet.transform.rotation = firePoint.rotation;
                     Rigidbody brb = bullet.GetComponent<Rigidbody>();
                     // No collision with the shooter
                     Physics.IgnoreCollision(coll, bullet.GetComponent<Collider>(), true);
                     // Apply force
-                    brb.AddForce(transform.forward * firePower, ForceMode.VelocityChange);
+                    //brb.AddForce(transform.forward * firePower, ForceMode.VelocityChange);
                 }
             }
 
@@ -172,12 +175,7 @@ namespace Galacticus
             return aiming && moving;
         }
 
-        //public bool IsTurning()
-        //{
-        //    Debug.Log($"{Vector3.Distance(moveDirection.normalized, Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized)}");
-        //    //float angle = 
-        //    return !aiming && moveDirection != Vector3.zero && Vector3.Distance(moveDirection.normalized, Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized) > 0.01f;
-        //}
+       
         #endregion
     }
 

@@ -81,7 +81,8 @@ namespace Galacticus
                         Physics.IgnoreCollision(bColl, c, true);
 
                     bullet.transform.position = firePoint.position;
-                    bullet.GetComponent<Rigidbody>().AddForce(firePower * firePoint.forward, ForceMode.VelocityChange);
+                    bullet.transform.rotation = firePoint.rotation;
+                    //bullet.GetComponent<Rigidbody>().AddForce(firePower * firePoint.forward, ForceMode.VelocityChange);
                     // Update count
                     count--;
 
