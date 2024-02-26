@@ -180,7 +180,7 @@ namespace Galacticus
                 moving = true;
                 // Set target direction and throttle
                 moveDirection = new Vector3(moveInput.normalized.x, 0f, moveInput.normalized.y);
-               
+
             }
             else
             {
@@ -192,7 +192,7 @@ namespace Galacticus
 
 
             // Aiming
-            
+
             if (aimInput.magnitude > 0)
             {
                 aiming = true;
@@ -211,7 +211,7 @@ namespace Galacticus
             angle = Mathf.MoveTowardsAngle(0f, angle, rotationSpeed * mul * Time.deltaTime);
             // Apply rotation
             transform.forward = Quaternion.AngleAxis(angle, Vector3.up) * transform.forward;
-           
+
 
             // Setting drag
             if (moving)
@@ -224,7 +224,7 @@ namespace Galacticus
             angle = Vector3.SignedAngle(transform.forward, aimDirection.normalized, Vector3.up); // Update the angle
             if (aiming && Mathf.Abs(angle) < angleTollerance)
             {
-                if((System.DateTime.Now - lastShotTime).TotalSeconds > fireRate)
+                if ((System.DateTime.Now - lastShotTime).TotalSeconds > fireRate)
                 {
                     lastShotTime = System.DateTime.Now;
                     // Create new bullet
@@ -239,8 +239,82 @@ namespace Galacticus
                 }
             }
 
-            
+
         }
+
+        //void CheckInput()
+        //{
+        //    // Get input
+        //    Vector3 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        //    Vector3 aimInput = new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical"));
+
+        //    // Moving
+        //    if (moveInput.magnitude > 0)
+        //    {
+        //        moving = true;
+        //        // Set target direction and throttle
+        //        moveDirection = new Vector3(moveInput.normalized.x, 0f, moveInput.normalized.y);
+
+        //    }
+        //    else
+        //    {
+        //        // Reset throttle
+        //        moving = false;
+        //        moveDirection = Vector3.zero;
+        //    }
+
+
+
+        //    // Aiming
+
+        //    if (aimInput.magnitude > 0)
+        //    {
+        //        aiming = true;
+        //        aimDirection = new Vector3(aimInput.x, 0f, aimInput.y).normalized;
+        //    }
+        //    else
+        //    {
+        //        aiming = false;
+        //        aimDirection = moveDirection;
+        //    }
+        //    // Get the angle between the current aiming direction and the target one
+        //    float mul = 1;
+        //    if (aiming)
+        //        mul = .5f;
+        //    float angle = Vector3.SignedAngle(transform.forward, aimDirection.normalized, Vector3.up);
+        //    angle = Mathf.MoveTowardsAngle(0f, angle, rotationSpeed * mul * Time.deltaTime);
+        //    // Apply rotation
+        //    transform.forward = Quaternion.AngleAxis(angle, Vector3.up) * transform.forward;
+
+
+        //    // Setting drag
+        //    if (moving)
+        //        rb.drag = movingDrag;
+        //    else
+        //        rb.drag = notMovingDrag;
+
+        //    // Shoot
+        //    float angleTollerance = 3;
+        //    angle = Vector3.SignedAngle(transform.forward, aimDirection.normalized, Vector3.up); // Update the angle
+        //    if (aiming && Mathf.Abs(angle) < angleTollerance)
+        //    {
+        //        if((System.DateTime.Now - lastShotTime).TotalSeconds > fireRate)
+        //        {
+        //            lastShotTime = System.DateTime.Now;
+        //            // Create new bullet
+        //            GameObject bullet = Instantiate(bulletPrefab);
+        //            bullet.transform.position = firePoint.position;
+        //            bullet.transform.rotation = firePoint.rotation;
+        //            Rigidbody brb = bullet.GetComponent<Rigidbody>();
+        //            // No collision with the shooter
+        //            Physics.IgnoreCollision(coll, bullet.GetComponent<Collider>(), true);
+        //            // Apply force
+        //            //brb.AddForce(transform.forward * firePower, ForceMode.VelocityChange);
+        //        }
+        //    }
+
+
+        //}
 
         void Move()
         {
@@ -256,8 +330,22 @@ namespace Galacticus
 
             if(moving)
             {
+                bool applyForce = true;
+
+                // If we are not aiming we apply force only if the angle between the forward direction and the move direction is less than 90 degrees
+                if (!aiming)
+                {
+                    // Get the angle between the current velocity and the target direction
+                    Vector3 currDirProj = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
+                    Vector3 targetDirProj = Vector3.ProjectOnPlane(moveDirection, Vector3.up);
+                    if(Vector3.Dot(currDirProj, targetDirProj) < 0f)
+                        applyForce = false;
+                }
+
+
                 // Apply force
-                rb.AddForce(target * accelerationForce * mul * (aiming ? accelerationForceAimingMul : 1f), ForceMode.Acceleration);
+                if (applyForce)
+                    rb.AddForce(target * accelerationForce * mul * (aiming ? accelerationForceAimingMul : 1f), ForceMode.Acceleration);
             }
 
           

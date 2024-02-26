@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelerationForce: 18
   accelerationForceAimingMul: 0.7
-  notMovingDrag: 4
+  notMovingDrag: 5
   movingDrag: 2
   rotationSpeed: 360
   bulletPrefab: {fileID: 3277436984828729423, guid: b3807109958deea49a5209983141dd5f, type: 3}
@@ -227,15 +227,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3227465434368151454}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 620538da12cbb7a4c9c3b133607610d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSideSpeed: 3
-  maxSideSpeed: 6
-  maxRoll: 30
-  target: {fileID: 1611100666018860877}
+  minRotSpeed: 5
+  maxRotSpeed: 30
+  minStrafeSpeed: 2
+  maxStrafeSpeed: 4
+  minRollAngle: 15
+  maxRollAngle: 60
+  rollSpeed: 80
+  useRigidbody: 1
 --- !u!1 &5518300355002006155
 GameObject:
   m_ObjectHideFlags: 0
