@@ -1,3 +1,98 @@
+#define SHIP
+
+#if ROBOT
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+namespace Galacticus
+{
+    public class PlayerController : MonoBehaviour
+    {
+        [SerializeField]
+        float acceleration = 10;
+
+        [SerializeField]
+        float deceleration = 10;
+
+        [SerializeField]
+        float maxSpeed = 8;
+
+        [SerializeField]
+        float rotationSpeed = 120f;
+
+        Vector3 moveDirection;
+        bool moving;
+
+        CharacterController cc;
+        float horizontalSpeed;
+
+        float verticalSpeed = 0;
+
+        private void Awake()
+        {
+            cc = GetComponent<CharacterController>();
+        }
+
+        private void Update()
+        {
+            CheckInput();
+
+            Move();
+        }
+
+        void CheckInput()
+        {
+            // Get input
+            Vector3 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            Vector3 aimInput = new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical"));
+
+            // Moving
+            if (moveInput.magnitude > 0)
+            {
+                moving = true;
+                // Set target direction and throttle
+                moveDirection = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
+
+            }
+            else
+            {
+                // Reset throttle
+                moving = false;
+                moveDirection = Vector3.zero;
+            }
+
+        }
+
+        void Move()
+        {
+            if (moving)
+            {
+                horizontalSpeed = Mathf.MoveTowards(horizontalSpeed, maxSpeed, acceleration * Time.deltaTime);
+            }
+            else
+            {
+                horizontalSpeed = Mathf.MoveTowards(horizontalSpeed, 0, deceleration * Time.deltaTime);
+            }
+            Debug.Log($"CC.IsGrounded:{cc.isGrounded}");
+            Debug.Log($"speed:{horizontalSpeed}");
+
+            if (!cc.isGrounded)
+            {
+                verticalSpeed += Physics.gravity.y * Time.deltaTime;
+            }
+            else
+            {
+                verticalSpeed = 0;
+            }
+
+            cc.Move(moveDirection*horizontalSpeed*Time.deltaTime + Vector3.up*verticalSpeed*Time.deltaTime);
+        }
+    }
+}
+#endif
+
+
+#if SHIP
 using Galacticus.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
@@ -180,3 +275,4 @@ namespace Galacticus
     }
 
 }
+#endif

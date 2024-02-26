@@ -95,7 +95,6 @@ namespace Galacticus
             else if (sideSpeed >= max)
                 rollAngle = sign * maxRollAngle;
 
-            Debug.Log($"Roll:{rollAngle}");
             currentRollAngle = Mathf.MoveTowards(currentRollAngle, rollAngle, rollSpeed * (useRigidbody ? Time.fixedDeltaTime : Time.deltaTime));
            
 

@@ -2,11 +2,14 @@ using Galacticus.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Galacticus
 {
     public class Boomer : MonoBehaviour
     {
+        public UnityAction OnBoom;
+
         [SerializeField]
         float damage = 50;
 
@@ -31,7 +34,8 @@ namespace Galacticus
             foreach (IDamageable d in targets)
                 d.ApplyDamage(damage);
 
-            transform.GetChild(0).gameObject.SetActive(false);
+
+            OnBoom?.Invoke();
         }
 
         private void OnTriggerEnter(Collider other)

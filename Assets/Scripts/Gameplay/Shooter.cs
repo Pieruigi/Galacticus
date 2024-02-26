@@ -31,6 +31,9 @@ namespace Galacticus
         [SerializeField]
         GameObject bulletPrefab;
 
+        /// <summary>
+        /// Internal colliders we need to ignore in order to avoid the bullet to explode while shooting
+        /// </summary>
         [SerializeField]
         List<Collider> avoiders;
 

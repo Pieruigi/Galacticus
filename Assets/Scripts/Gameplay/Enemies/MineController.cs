@@ -7,11 +7,15 @@ namespace Galacticus
 {
     public class MineController : MonoBehaviour
     {
+
         [SerializeField]
         float explosionDelay = 1f;
 
         [SerializeField]
         Boomer boomer;
+
+        [SerializeField]
+        GameObject mineObject;
 
         bool exploding = false;
         
@@ -31,6 +35,8 @@ namespace Galacticus
             await Task.Delay(System.TimeSpan.FromSeconds(explosionDelay));
 
             boomer.Boom();
+
+            mineObject.SetActive(false);
 
             Destroy(gameObject, 5);
 
